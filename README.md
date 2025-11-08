@@ -13,6 +13,18 @@ El objetivo es construir un modelo matemático (un polinomio) que pase exactamen
 
 Usaremos `N+1` puntos (días) de los datos de una acción para construir un polinomio de interpolación de grado `N`. Luego, analizaremos visualmente qué tan bien este polinomio describe la tendencia general de los datos, o si sufre de oscilaciones no deseadas (Fenómeno de Runge).
 
+Seguiremos las siguientes ecuaciones:
+
+$$
+P(x) = \sum_{i=0}^{N} y_i \cdot L_i(x)
+$$
+
+Donde $L_i(x)$ es el polinomio base de Lagrange:
+
+$$
+L_i(x) = \prod_{\substack{j=0 \\ j \neq i}}^{N} \frac{x - x_j}{x_i - x_j}
+$$
+
 **Este proyecto NO busca predecir el futuro**, sino analizar críticamente las propiedades matemáticas y las limitaciones de la interpolación polinómica cuando se aplica a datos con variaciones.
 
 ## 3. Estructura del Proyecto
