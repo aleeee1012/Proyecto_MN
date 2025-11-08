@@ -1,4 +1,4 @@
-# 📈 Proyecto de Métodos Numéricos: Interpolación Polinómica de Datos Históricos
+# Interpolación Polinómica de Datos Históricos
 
 ## 1. Descripción del Proyecto
 
