@@ -71,24 +71,15 @@ print("Datos para el gráfico generados")
 print(f"Generando gráfico de análisis...")
 
 plt.figure(figsize=(14, 8))
-
-# 1. Graficar TODOS los datos reales (como puntos pequeños)
 plt.plot(dias[:N_DIAS_ANALISIS], precios[:N_DIAS_ANALISIS], 'k.', label='Datos Reales (Precio Cierre)', alpha=0.6)
-
-# 2. Graficar los PUNTOS que usamos para interpolar (como círculos rojos)
 plt.plot(x_interp, y_interp, 'ro', markersize=10, label=f'Puntos de Interpolación (N={N_PUNTOS_INTERPOLACION})')
-
-# 3. Graficar la CURVA del polinomio resultante
 plt.plot(dias_polinomio, precios_polinomio, 'b-', label=f'Polinomio de Lagrange (Grado {N_PUNTOS_INTERPOLACION - 1})')
-
-# Configuración del gráfico
 plt.title(f'Interpolación de Lagrange en Precios de {ACTIVO} (Fenómeno de Runge)', fontsize=16)
 plt.xlabel('Días', fontsize=12)
 plt.ylabel('Precio de Cierre (USD)', fontsize=12)
 plt.legend(fontsize=10)
 plt.grid(True)
 
-# ¡IMPORTANTE! Ajustar el eje Y para poder ver las oscilaciones
 min_visible = np.min(precios[:N_DIAS_ANALISIS]) * 0.9
 max_visible = np.max(precios[:N_DIAS_ANALISIS]) * 1.1
 plt.ylim(min_visible, max_visible)
