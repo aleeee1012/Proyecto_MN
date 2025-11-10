@@ -43,8 +43,8 @@ except Exception as e:
 
 # ----- Pruebas -----
 print(f"Iniciando etapa de prueba")
-# Analizar los primeros 380 días de datos
-N_DIAS_ANALISIS = 380
+# Analizar los primeros 270 días de datos
+N_DIAS_ANALISIS = 270
 # 11 puntos para crear polinomio de grado 10
 N_PUNTOS_INTERPOLACION = 11
 
