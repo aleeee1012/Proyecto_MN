@@ -10,6 +10,13 @@ FECHA_INICIO = '2024-03-01'
 FECHA_FIN = '2025-04-01'
 CARPETA_GRAFICOS = 'graficos'
 
+# Variables Análisis
+print(f"Iniciando etapa de prueba")
+# Analizar los primeros 270 días de datos
+N_DIAS_ANALISIS = 270
+# 11 puntos para crear polinomio de grado 10
+N_PUNTOS_INTERPOLACION = 11
+
 # Asegurarse de que la carpeta 'graficos' exista, crearla de lo contrario
 
 if not os.path.exists(CARPETA_GRAFICOS):
@@ -31,7 +38,7 @@ try:
 
 
 # Verificar que tenemos suficientes datos
-    if len(precios) < 380:
+    if len(precios) < 270:
         print(f"Error: No se descargaron suficientes datos ({len(precios)} días).")
         print("Intenta con un rango de fechas más amplio (FECHA_INICIO).")
         exit()
@@ -42,12 +49,6 @@ except Exception as e:
 
 
 # ----- Pruebas -----
-print(f"Iniciando etapa de prueba")
-# Analizar los primeros 270 días de datos
-N_DIAS_ANALISIS = 270
-# 11 puntos para crear polinomio de grado 10
-N_PUNTOS_INTERPOLACION = 11
-
 print(f"\nGenerando prueba para el gráfico (Polinomio Grado {N_PUNTOS_INTERPOLACION - 1})...")
 
 # 1.- Seleccionar puntos a interpolar usando linespace
@@ -57,13 +58,13 @@ x_interp = dias[indices_puntos]
 y_interp = precios[indices_puntos]
 
 # 2.- Generar curva del polinomio creando un eje X fino para dibujar la curva
-dias_polinomio = np.arrange(0, N_DIAS_ANALISIS)
+dias_polinomio = np.arange(0, N_DIAS_ANALISIS)
 precios_polinomio = []
 
 # Evaluar polinomio en cada uno de esos dias
 for dia in dias_polinomio:
     valor_y = polinomio_lagrange(x_interp, y_interp, dia)
-    precios_polinomio.append
+    precios_polinomio.append(valor_y)
 
 print("Datos para el gráfico generados")
 
@@ -85,7 +86,7 @@ max_visible = np.max(precios[:N_DIAS_ANALISIS]) * 1.1
 plt.ylim(min_visible, max_visible)
 
 # Guardar el gráfico
-ruta_salida = os.path.join(CARPETA_GRAFICOS, f'analisis_lagrange_{ACTIVO}_380dias.png')
+ruta_salida = os.path.join(CARPETA_GRAFICOS, f'analisis_lagrange_{ACTIVO}_{N_DIAS_ANALISIS}dias.png')
 plt.savefig(ruta_salida)
 
 print(f"¡Análisis completo! Gráfico guardado en: {ruta_salida}")
