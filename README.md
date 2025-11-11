@@ -16,6 +16,7 @@ Usaremos `N+1` puntos (días) de los datos de una acción para construir un poli
 Seguiremos las siguientes ecuaciones:
 
 **Polinomio de Lagrange:**
+
 $$
 P(x) = \sum_{i=0}^{N} y_i \cdot L_i(x)
 $$
@@ -27,9 +28,11 @@ L_i(x) = \prod_{\substack{j=0 \\ j \neq i}}^{N} \frac{x - x_j}{x_i - x_j}
 $$
 
 **Polinomio de Newton (Diferencias Divididas):**
+
 $$
 P(x) = b_0 + b_1(x-x_0) + b_2(x-x_0)(x-x_1) + \dots + b_n(x-x_0)\dots(x-x_{n-1})
 $$
+
 Donde los coeficientes $b_i$ se calculan usando la tabla de diferencias divididas.
 
 **Este proyecto NO busca predecir el futuro**, sino analizar críticamente las propiedades matemáticas y las limitaciones de la interpolación polinómica cuando se aplica a datos con variaciones.
