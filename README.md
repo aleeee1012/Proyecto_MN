@@ -11,7 +11,7 @@ En este proyecto para el curso de Métodos Numéricos, seleccionamos un método 
 
 El objetivo es construir un modelo matemático (un polinomio) que pase exactamente por un conjunto de puntos de datos históricos.
 
-Usaremos `N+1` puntos (días) de los datos de una acción para construir un polinomio de interpolación de grado `N`. Luego, analizaremos visualmente qué tan bien este polinomio describe la tendencia general de los datos, o si sufre de oscilaciones no deseadas (Fenómeno de Runge).
+Usaremos `N+1` puntos (días) de los datos de una acción para construir un polinomio de interpolación de grado `N`. Luego, analizaremos visualmente qué tan bien este polinomio describe la tendencia general de los datos, o si sufre de oscilaciones no deseadas.
 
 Seguiremos las siguientes ecuaciones:
 
@@ -39,29 +39,43 @@ Donde los coeficientes $b_i$ se calculan usando la tabla de diferencias dividida
 
 ## 3. Análisis de Resultados y Conclusiones
 
-Tras ejecutar el proyecto con los datos del activo "DIS" (Disney) durante un período de 270 días, se generó el siguiente gráfico de análisis comparativo:
+Realizamos dos experimentos para analizar el comportamiento del método bajo diferentes condiciones.
 
-![Gráfico de Comparación](graficos/analisis_comparacion_L_vs_N_DIS.png)
+### Experimento 1: Polinomio de Alto Grado (Grado 10)
 
-### Discusión de los Resultados
+Inicialmente, ejecutamos el proyecto con 11 puntos de interpolación para generar un polinomio de Grado 10.
 
-1.  **Eficacia: Funcionó?**
-    Sí, ya que como se observa, la línea azul (Polinomio de Lagrange) y la línea naranja punteada (Polinomio de Newton) pasan perfectamente por cada uno de los 11 Puntos de Interpolación. Esto valida que nuestras implementaciones son matemáticamente correctas y, lo más importante, comprueba visualmente la teoría: ambos métodos (Lagrange y Newton) convergen al único polinomio de interpolación que existe para este conjunto de puntos.
+![Gráfico de Grado 10](graficos/Fenomeno_Runge.png)
 
-2.  **Limitaciones**
-    A pesar de su corrección matemática, el método es extremadamente inadecuado para este problema real. El gráfico expone una limitación severa:
+**Discusión del Experimento 1:**
 
-    - **Oscilación Extrema (Fenómeno de Runge):** En lugar de seguir la tendencia general de los "Datos Reales" (puntos negros), el polinomio (ambas curvas, azul y naranja) oscila violentamente entre los puntos de interpolación. Esto es especialmente notorio en los extremos del intervalo (días 0-50 y días 240-270), donde el polinomio se "dispara" a valores irreales.
-    - **Sobreajuste:** El polinomio de Grado 10 se "sobreajusta" a los 11 puntos que le dimos. Es tan sensible que en lugar de capturar la tendencia suave del precio, intenta modelar el "ruido" (la volatilidad diaria). El resultado es un modelo que es inútil para cualquier tipo de análisis o predicción.
+1.  **Eficacia:** Los métodos de Lagrange y Newton convergieron perfectamente al mismo polinomio.
+2.  **Limitaciones:** A pesar de la corrección matemática, el método resultó **extremadamente inadecuado**. El gráfico expuso una limitación severa:
+    * **Oscilación Extrema:** El polinomio de Grado 10 oscilaba violentamente entre los puntos, especialmente en los extremos, disparándose a valores irreales.
+    * **Sobreajuste:** El polinomio modeló el "ruido" de los 11 puntos, ignorando la tendencia real.
+3.  **Conclusión Parcial:** La interpolación polinómica de **alto grado** es numéricamente inestable y poco práctica para estos datos.
 
-3.  **Desviaciones y Errores**
-    La "desviación" observada es la gran diferencia vertical entre la curva polinómica (ahora visible tanto en azul como en naranja) y los datos reales (negro) en la mayoría de los días. Este error no es un error de código, sino una característica matemática inherente a la interpolación polinómica de alto grado con puntos equiespaciados.
+---
 
-### Conclusiones y Posibles Mejoras
+### Experimento 2: Polinomio de Bajo Grado (Grado 4)
 
-El proyecto demuestra exitosamente que, aunque un método numérico sea matemáticamente correcto, su aplicación a un problema real debe ser crítica.
+Basado en las limitaciones del Grado 10, nuestra hipótesis fue que el problema era el **alto grado** del polinomio. Repetimos el experimento, pero esta vez reduciendo drásticamente los puntos de interpolación a **5 puntos** (generando un polinomio de **Grado 4**).
 
-- **Conclusión Principal:** La interpolación polinómica de alto grado (tanto por Lagrange como por Newton) no es un método efectivo para analizar datos financieros o series de tiempo con ruido. El Fenómeno de Runge domina el resultado y lo invalida para cualquier uso práctico en este contexto.
+Este fue el resultado:
+
+![Gráfico de Grado 4](graficos/analisis_comparacion_L_vs_N_DIS.png)
+
+**Discusión del Experimento 2:**
+
+1.  **Eficacia:** Nuevamente, Lagrange y Newton convergen perfectamente (línea azul y naranja) y pasan por los 5 puntos rojos.
+2.  **Solución a la Limitación:** Como se observa, el polinomio de Grado 4 es **suave y estable**. Las oscilaciones violentas han **desaparecido por completo**. La curva resultante sigue una tendencia general mucho más creíble y se mantiene dentro del rango de los datos reales.
+
+### Conclusión Final del Proyecto
+
+El proyecto demuestra que, si bien la interpolación polinómica (Lagrange/Newton) es matemáticamente correcta, su aplicación práctica **depende críticamente del grado del polinomio**:
+
+* **Conclusión 1:** Los polinomios de **alto grado** (ej. Grado 10) son numéricamente inestables cuando se usan con puntos equiespaciados, lo que provoca oscilaciones severas.
+* **Conclusión 2:** Al **reducir el número de puntos (ej. a Grado 4)**, el método se vuelve estable y produce una curva suave que puede ser útil para un análisis de tendencia simple, **resolviendo la limitación** observada en el primer experimento.
 
 ## 4. Instalación y Dependencias
 
